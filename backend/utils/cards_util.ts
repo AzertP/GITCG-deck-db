@@ -31,6 +31,15 @@ export const convertCharacterCard = (character: TcgCharacterCards) => {
     return convertedCard
 }
 
+export const convertActionCard = (character: TcgActionCards) => {
+    const convertedCard: ActionCard = {
+        name: character.name,
+        id: character.id,
+        img_link: getImageUrl(character.images.filename_cardface)
+    }
+    return convertedCard
+}
+
 export const characterCards = getAllCharacterCards()
 export const actionCards = getAllActionCards()
 

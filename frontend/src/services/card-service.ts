@@ -9,4 +9,11 @@ const getCharacterCards = async () => {
     return response.data
 }
 
-export default {getCharacterCards}
+const getActionCards = async () => {
+    console.log(`${base_URL}/characters`)
+    const response = await axios.get<CharacterCard[]>(`${base_URL}/actions`)
+    return response.data
+}
+
+
+export default {getCharacterCards, getActionCards}
