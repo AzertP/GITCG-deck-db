@@ -22,7 +22,7 @@ function App() {
       <Routes>
         <Route path='/' element={<p>Welcome home!</p>}/> 
         <Route path='/card' element={<CardPage/>}/>
-        <Route path='/deck' element={<DeckPage/>}/>
+        <Route path='/deck/*' element={<DeckPage/>}/>
       </Routes>
       </BrowserRouter>
     </>
