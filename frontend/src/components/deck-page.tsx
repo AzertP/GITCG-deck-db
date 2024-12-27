@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query"
 import { Deck } from "../../../types/card-types"
 import deckService from "../services/deck-service"
 
-import { Link, Route, useMatch, Routes } from "react-router-dom"
+import { Link, Route, Routes } from "react-router-dom"
 
 const DeckElement = (deck: Deck) => {
     return <div>
