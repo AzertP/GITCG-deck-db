@@ -2,7 +2,8 @@ import { useQuery } from "@tanstack/react-query"
 import { Deck } from "../../../types/card-types"
 import deckService from "../services/deck-service"
 
-import { Link, Route, Routes } from "react-router-dom"
+import { Link, Route, Routes, useParams } from "react-router-dom"
+import { CharacterCardElement } from "./card-element"
 
 const DeckElement = (deck: Deck) => {
     return <div>
@@ -13,8 +14,25 @@ const DeckElement = (deck: Deck) => {
 }
 
 const DetailedDeckView = () => {
+    const {id} = useParams()
+    const deck = useQuery({
+        queryKey: ['getDeckById'],
+        queryFn: () => deckService.getDeckById(Number(id))
+    })
+
+    if (deck.isLoading || deck.data === undefined) {
+        return <div>
+            Loading...
+        </div>
+    }
+
     return <div>
-        Hi you are viewing something
+        <h2>{deck.data.name}</h2>
+        <p> Deck code: {deck.data.description} </p>
+        <h4>Characters</h4>
+        {deck.data.characters.map(character => <CharacterCardElement {...character}/>)}
+        <h4>Action Cards</h4>
+        {deck.data.actions.map(action => <CharacterCardElement {...action}/>)}
     </div>
 }
 

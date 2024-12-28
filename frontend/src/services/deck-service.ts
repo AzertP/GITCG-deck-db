@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Deck } from "../../../types/card-types";
+import { Deck, DetailedDeck } from "../../../types/card-types";
 
 const base_URL = 'http://localhost:3001/api/deck'
 
@@ -8,4 +8,9 @@ const getAllDeck = async () => {
     return response.data
 }
 
-export default {getAllDeck}
+const getDeckById = async (id: number) => {
+    const response = await axios.get<DetailedDeck>(`${base_URL}/${id}`)
+    return response.data
+}
+
+export default {getAllDeck, getDeckById}

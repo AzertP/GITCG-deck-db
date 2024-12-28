@@ -19,4 +19,11 @@ interface CharacterCard extends Card {
 
 }
 
-export type {CharacterCard, ActionCard, Deck}
+interface DetailedDeck {
+    name: string
+    description: string
+    characters: CharacterCard[]
+    actions: ActionCard[]
+}
+
+export type {CharacterCard, ActionCard, Deck, DetailedDeck}

@@ -56,22 +56,26 @@ interface DeckShareID {
     offset: number,
     cardshareids: number[]
 }
-type Card = TcgActionCards | TcgCharacterCards
 
 const getDeckFromShareids = (deck: DeckShareID) => {
-    let cardList: Card[] = []
+    let characters: CharacterCard[] = []
+    let actions: ActionCard[] = []
     deck.cardshareids.forEach(shareID => {
         const character = findCharacterCardByShareID(shareID)
         const action = findActionCardByShareID(shareID)
 
         if (character != undefined) {
-            cardList.push(character)
+            characters.push(convertCharacterCard(character))
         } else if (action != undefined) {
-            cardList.push(action)
+            actions.push(convertActionCard(action))
         }
     })
 
-    return cardList.length === 30? cardList : undefined
+    if (characters.length === 3 && actions.length === 30) {
+        return {characters, actions}
+    }
+    else 
+        return undefined
 }
 
 const URL = "https://genshin-db-api.vercel.app/api/"

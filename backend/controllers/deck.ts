@@ -1,6 +1,6 @@
 import express from 'express'
 import { decodeDeck } from 'utils/cards_util'
-import { ActionCard, CharacterCard, Deck } from '../../types/card-types'
+import { ActionCard, CharacterCard, Deck, DetailedDeck } from '../../types/card-types'
 
 interface NewDeckQuery {
     deckcode: string
@@ -31,6 +31,32 @@ deckRouter.get("/", (_req, res) => {
     res.send(deckData)
 })
 
+// Get a detailed deck with 
+deckRouter.get("/:id", async (req, res) => {
+    const id = Number(req.params.id)
+    const deck = deckData.find(deck => deck.id === id)
+
+    if (deck === undefined) {
+        res.status(404).json({error: "Can't find content"})
+        return
+    }
+
+    const result = await decodeDeck(deck.deckcode)
+    if (result === undefined) {
+        res.status(500).json({error: "Cannot view page"})
+        return
+    }
+    
+    // No error
+    const detailedDeck: DetailedDeck = {
+        name: deck.name,
+        description: deck.description,
+        actions: result.actions,
+        characters: result.characters
+    }
+    res.send(detailedDeck)
+})
+
 deckRouter.post("/submit", async (req, res) => {
     const data = req.body
     
@@ -38,8 +64,12 @@ deckRouter.post("/submit", async (req, res) => {
         res.send("okay")
         const deck = await decodeDeck(data.deckcode)
         if (deck !== undefined) {
-            deck.forEach(card => {
-                console.log(card.name)
+            deck.characters.forEach(character => {
+                console.log(character.name)
+            })
+            console.log('==================')
+            deck.actions.forEach(action => {
+                console.log(action.name)
             })
         }
     }
