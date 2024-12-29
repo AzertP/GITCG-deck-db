@@ -1,8 +1,25 @@
 import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
+import { Button, ButtonGroup, Grid2 } from "@mui/material"
 
 import cardService from '../services/card-service'
 import { CharacterCardElement } from "./card-element"
-import { useState } from "react"
+import { ActionCard, CharacterCard } from "../../../types/card-types"
+
+// const TopButtons = () => {
+
+// }
+
+const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefined}) => {
+    if (cardList === undefined) 
+        return <div>Loading...</div>
+    
+    return <Grid2 container spacing={1}>
+        {cardList.map(card => <Grid2 size={2}>
+            <CharacterCardElement {...card}/>
+        </Grid2>)}
+    </Grid2>
+}
 
 const CardPage = () => {
     const characterCards = useQuery({
@@ -28,16 +45,16 @@ const CardPage = () => {
 
     if (displayCharacter) {
         return (<div>
-            <button>Character</button>
-            <button onClick={() => setDisplayCharacter(false)}>Action</button>
-            {characterCards.data?.map(character => <CharacterCardElement key={character.id} {...character}/>)}
+            <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
+            <Button onClick={() => setDisplayCharacter(false)}>Action</Button>
+            <CardGrid cardList={characterCards.data}/>
         </div>)
     }
     else {
         return (<div>
-            <button onClick={() => setDisplayCharacter(true)}>Character</button>
-            <button onClick={() => setDisplayCharacter(false)}>Action</button>
-            {actionCards.data?.map(action => <CharacterCardElement key={action.id} {...action}/>)}
+            <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
+            <Button onClick={() => setDisplayCharacter(false)}>Action</Button>
+            <CardGrid cardList={actionCards.data}/>
         </div>)
     }
 }

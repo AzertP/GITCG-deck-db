@@ -28,7 +28,7 @@ const DetailedDeckView = () => {
 
     return <div>
         <h2>{deck.data.name}</h2>
-        <p> Deck code: {deck.data.description} </p>
+        <p> {deck.data.description} </p>
         <h4>Characters</h4>
         {deck.data.characters.map(character => <CharacterCardElement {...character}/>)}
         <h4>Action Cards</h4>
@@ -44,9 +44,11 @@ const DeckPage = () => {
  
     return (<div>
         <Routes>
-            <Route path="/" element
-                            ={decks.data?.map(deck => 
-                                <DeckElement key={deck.id} {...deck}/>)}/>
+            <Route index element
+                            =<div>{
+                                decks.data?.map(deck => 
+                                    <DeckElement key={deck.id} {...deck}/>)}
+                             </div>/>
             <Route path=":id" element={<DetailedDeckView/>}/>
         </Routes>
     </div>)

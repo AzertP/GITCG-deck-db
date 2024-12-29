@@ -3,6 +3,8 @@ import {
   BrowserRouter, Routes, Route, Link
 } from 'react-router-dom'
 
+import { AppBar, Button, Container, Toolbar } from '@mui/material'
+
 import CardPage from './components/card-page'
 import DeckPage from './components/deck-page'
 import './App.css'
@@ -14,16 +16,27 @@ function App() {
     <>
       <BrowserRouter>
       <div>
-        <Link to={"/"}> Home </Link>
-        <Link to={"/card"}> Card</Link>
-        <Link to={"/deck"}> Deck </Link>
+        <AppBar position='static'>
+          <Toolbar>
+            <Button component={Link} to="/" color='inherit'>
+              Home
+            </Button>
+            <Button component={Link} to="/card" color='inherit'>
+              Card
+            </Button>
+            <Button component={Link} to="/deck" color='inherit'>
+              Deck
+            </Button>
+          </Toolbar>
+        </AppBar>
       </div>
-
-      <Routes>
-        <Route path='/' element={<p>Welcome home!</p>}/> 
-        <Route path='/card' element={<CardPage/>}/>
-        <Route path='/deck/*' element={<DeckPage/>}/>
-      </Routes>
+      <Container>
+        <Routes>
+          <Route path='/' element={<p>Welcome home!</p>}/> 
+          <Route path='card' element={<CardPage/>}/>
+          <Route path='deck/*' element={ <DeckPage/> }/>
+        </Routes>
+      </Container>
       </BrowserRouter>
     </>
   )
