@@ -1,20 +1,24 @@
 import axios from 'axios'
 
 import gdb, { TcgActionCards, TcgCharacterCards } from '@genshin-db/tcg'
-import {ActionCard, CharacterCard} from '../../types/card-types'
+import {ActionCard, CharacterCard, DiceType, isDiceType} from '../../types/card-types'
 
 const getAllCharacterCards = () => {
     return gdb.tcgcharactercards("names", {
         matchCategories: true,
         verboseCategories: true,
-    })
+    }).filter(character => {
+        return 'shareid' in character
+    }).sort((a, b) => (a.shareid - b.shareid))
 }
 
 const getAllActionCards = () => {
     return gdb.tcgactioncards("names", {
         matchCategories: true,
         verboseCategories: true,
-    })
+    }).filter(action => {
+        return 'shareid' in action
+    }).sort((a, b) => (a.shareid - b.shareid))
 }
 
 function getImageUrl(filename: string) {
@@ -26,16 +30,31 @@ export const convertCharacterCard = (character: TcgCharacterCards) => {
     const convertedCard: CharacterCard = {
         name: character.name,
         id: character.id,
+        hp: character.hp,
         img_link: getImageUrl(character.images.filename_cardface)
     }
     return convertedCard
 }
 
-export const convertActionCard = (character: TcgActionCards) => {
+export const convertActionCard = (action: TcgActionCards) => {
+    
+    let newCost: {type: DiceType, count: number} = {type: 'GCG_COST_DICE_SAME', count: 0}
+    if (action.playcost.length > 0) {
+        if (action.playcost.length > 1) {
+            console.log(action.name)
+        }
+
+        if (isDiceType(action.playcost[0].costtype)) {
+            newCost.type = action.playcost[0].costtype
+            newCost.count = action.playcost[0].count
+        }
+    }
+
     const convertedCard: ActionCard = {
-        name: character.name,
-        id: character.id,
-        img_link: getImageUrl(character.images.filename_cardface)
+        name: action.name,
+        id: action.id,
+        cost: newCost,
+        img_link: getImageUrl(action.images.filename_cardface)
     }
     return convertedCard
 }

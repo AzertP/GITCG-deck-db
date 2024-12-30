@@ -49,6 +49,7 @@ deckRouter.get("/:id", async (req, res) => {
     
     // No error
     const detailedDeck: DetailedDeck = {
+        deckcode: deck.deckcode,
         name: deck.name,
         description: deck.description,
         actions: result.actions,

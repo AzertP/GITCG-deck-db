@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState } from "react"
-import { Button, ButtonGroup, Grid2 } from "@mui/material"
+import { Button, Grid2 } from "@mui/material"
 
 import cardService from '../services/card-service'
-import { CharacterCardElement } from "./card-element"
-import { ActionCard, CharacterCard } from "../../../types/card-types"
+import { ActionCardElement, CharacterCardElement } from "./card-element"
+import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
 
 // const TopButtons = () => {
 
@@ -14,10 +14,17 @@ const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefi
     if (cardList === undefined) 
         return <div>Loading...</div>
     
-    return <Grid2 container spacing={1}>
-        {cardList.map(card => <Grid2 size={2}>
-            <CharacterCardElement {...card}/>
-        </Grid2>)}
+    return <Grid2 container spacing={2}>
+        {cardList.map(card => {
+            if (isCharacterCard(card))
+                return <Grid2 key={card.id}>
+                    <CharacterCardElement {...card}/>
+                </Grid2>
+
+            return <Grid2 key={card.id}>
+                <ActionCardElement {...card}/>
+            </Grid2>
+        })}
     </Grid2>
 }
 

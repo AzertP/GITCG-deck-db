@@ -16,7 +16,7 @@ function App() {
     <>
       <BrowserRouter>
       <div>
-        <AppBar position='static'>
+        <AppBar position='sticky'>
           <Toolbar>
             <Button component={Link} to="/" color='inherit'>
               Home

@@ -3,7 +3,8 @@ import { Deck } from "../../../types/card-types"
 import deckService from "../services/deck-service"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
-import { CharacterCardElement } from "./card-element"
+import { ActionCardElement, CharacterCardElement } from "./card-element"
+import { Grid2 } from "@mui/material"
 
 const DeckElement = (deck: Deck) => {
     return <div>
@@ -29,10 +30,20 @@ const DetailedDeckView = () => {
     return <div>
         <h2>{deck.data.name}</h2>
         <p> {deck.data.description} </p>
-        <h4>Characters</h4>
-        {deck.data.characters.map(character => <CharacterCardElement {...character}/>)}
+        <h2>Characters</h2>
+        <Grid2 container spacing={3}>
+            {deck.data.characters.map(character => 
+                <Grid2>
+                    <CharacterCardElement {...character}/>
+                </Grid2>)}
+        </Grid2>
         <h4>Action Cards</h4>
-        {deck.data.actions.map(action => <CharacterCardElement {...action}/>)}
+        <Grid2 container spacing={1}>
+            {deck.data.actions.map(action => 
+                <Grid2>
+                    <ActionCardElement {...action}/>
+                </Grid2>)}
+        </Grid2>
     </div>
 }
 
