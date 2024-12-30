@@ -1,10 +1,31 @@
-import { CharacterCard, ActionCard } from "../../../types/card-types"
+import { Card, CardActionArea, Tooltip, Typography } from "@mui/material"
+
+import { CharacterCard, ActionCard, isCharacterCard } from "../../../types/card-types"
 import hpIcon from "../assets/hp-icon.png"
 import diceIcons from "../assets/dice-icons/dice-icons"
 
 import './card.css'
 
-export const CharacterCardElement = (character: CharacterCard) => {
+export const CardElement = (card: CharacterCard | ActionCard) => {
+    return (
+    <Tooltip title={<Typography sx={{fontSize: '2em'}}>
+                    {card.name}
+                    </Typography>}>
+
+        <Card elevation={0}>
+            <CardActionArea>
+                {isCharacterCard(card)
+                    ? <CharacterCardElement {...card}/>
+                    : <ActionCardElement {...card}/>
+                }
+            </CardActionArea>
+        </Card>
+
+    </Tooltip>
+    )
+}
+
+const CharacterCardElement = (character: CharacterCard) => {
     return (
         <div className="card-container">
             <img src={character.img_link} 
@@ -19,7 +40,7 @@ export const CharacterCardElement = (character: CharacterCard) => {
     )
 }
 
-export const ActionCardElement = (action: ActionCard) => {
+const ActionCardElement = (action: ActionCard) => {
     const icon = () => {
         switch (action.cost.type) {
             case 'GCG_COST_DICE_ANEMO':

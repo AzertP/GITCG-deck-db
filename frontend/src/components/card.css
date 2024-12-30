@@ -1,3 +1,12 @@
+.MuiCard {
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+}
+
+.MuiCard:hover {
+    transform: 'translateY(-8px)';
+    box-shadow: 6
+}
+
 .card-container {
     position: relative;
 }
@@ -5,6 +14,8 @@
 .card-img {
     width: 175px;
     height: auto;
+    object-fit: cover;
+    display: block;
 }
 
 .top-icon {
@@ -23,7 +34,6 @@
     height: auto;
     z-index: 2;
 }
-
 
 .text-in-icon {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;

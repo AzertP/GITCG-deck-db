@@ -1,6 +1,6 @@
 import express from 'express'
 import { decodeDeck } from 'utils/cards_util'
-import { ActionCard, CharacterCard, Deck, DetailedDeck } from '../../types/card-types'
+import { Deck, DetailedDeck } from '../../types/card-types'
 
 interface NewDeckQuery {
     deckcode: string

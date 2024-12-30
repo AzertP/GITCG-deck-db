@@ -3,7 +3,7 @@ import { useState } from "react"
 import { Button, Grid2 } from "@mui/material"
 
 import cardService from '../services/card-service'
-import { ActionCardElement, CharacterCardElement } from "./card-element"
+import { CardElement } from "./card-element"
 import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
 
 // const TopButtons = () => {
@@ -18,11 +18,11 @@ const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefi
         {cardList.map(card => {
             if (isCharacterCard(card))
                 return <Grid2 key={card.id}>
-                    <CharacterCardElement {...card}/>
+                    <CardElement {...card}/>
                 </Grid2>
 
             return <Grid2 key={card.id}>
-                <ActionCardElement {...card}/>
+                <CardElement {...card}/>
             </Grid2>
         })}
     </Grid2>
