@@ -3,6 +3,14 @@ import axios from 'axios'
 import gdb, { TcgActionCards, TcgCharacterCards } from '@genshin-db/tcg'
 import {ActionCard, CharacterCard, DiceType, isDiceType} from '../../types/card-types'
 
+export function isTgcActionCard(card: TcgActionCards | TcgCharacterCards): card is TcgActionCards {
+    return 'playcost' in card
+}
+
+export function isTcgCharacterCard(card: TcgActionCards | TcgCharacterCards): card is TcgCharacterCards {
+    return 'hp' in card
+}
+
 const getAllCharacterCards = () => {
     return gdb.tcgcharactercards("names", {
         matchCategories: true,
@@ -41,7 +49,9 @@ export const convertActionCard = (action: TcgActionCards) => {
     let newCost: {type: DiceType, count: number} = {type: 'GCG_COST_DICE_SAME', count: 0}
     if (action.playcost.length > 0) {
         if (action.playcost.length > 1) {
-            console.log(action.name)
+            // TODO
+            // Do something with this
+            // console.log(action.name)
         }
 
         if (isDiceType(action.playcost[0].costtype)) {
@@ -54,6 +64,7 @@ export const convertActionCard = (action: TcgActionCards) => {
         name: action.name,
         id: action.id,
         cost: newCost,
+        description: action.description,
         img_link: getImageUrl(action.images.filename_cardface)
     }
     return convertedCard
@@ -68,6 +79,13 @@ export const findCharacterCardByShareID = (id: number) => {
 
 export const findActionCardByShareID = (id: number) => {
     return actionCards.find(card => card.shareid === id)
+}
+
+export const getCardById = (id: number) => {
+    const card = characterCards.find(card => card.id === id)
+    if (card === undefined)
+        return actionCards.find(card => card.id === id)
+    return card
 }
 
 interface DeckShareID {

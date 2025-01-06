@@ -9,19 +9,15 @@ import { AppBar, Button, Container, Toolbar,
 import CardPage from './components/card-page'
 import DeckPage from './components/deck-page'
 import './App.css'
+import CardDetailed from './components/card-detailed'
 
 const theme = createTheme({
   components: {
     MuiCard: {
       styleOverrides: {
         root: {
-          overflow: 'visible',
+          textDecoration: 'none',
           borderRadius: '8%',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-          '&:hover': {
-              transform: 'translateY(-8px)', // Move the card up
-              boxShadow: '6px', // Add shadow for the raised effect
-          },
         }
       }
     }
@@ -54,6 +50,7 @@ function App() {
           <Routes>
             <Route path='/' element={<p>Welcome home!</p>}/> 
             <Route path='card' element={<CardPage/>}/>
+              <Route path='card/:id' element={<CardDetailed/>}/>
             <Route path='deck/*' element={ <DeckPage/> }/>
           </Routes>
         </Container>

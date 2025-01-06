@@ -15,5 +15,10 @@ const getActionCards = async () => {
     return response.data
 }
 
+const getCardById = async (id: number) => {
+    const response = await axios.get<ActionCard | CharacterCard>(`${base_URL}/${id}`)
+    return response.data
+}
 
-export default {getCharacterCards, getActionCards}
+
+export default {getCharacterCards, getActionCards, getCardById}

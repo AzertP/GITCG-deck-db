@@ -1,18 +1,29 @@
+import { Link } from "react-router-dom"
 import { Card, CardActionArea, Tooltip, Typography } from "@mui/material"
 
 import { CharacterCard, ActionCard, isCharacterCard } from "../../../types/card-types"
+import getDiceIcon from "../utils/get-dice-icon"
 import hpIcon from "../assets/hp-icon.png"
-import diceIcons from "../assets/dice-icons/dice-icons"
 
-import './card.css'
+import './card-element.css'
+import TextInIcon from "./text-in-icon"
 
 export const CardElement = (card: CharacterCard | ActionCard) => {
     return (
-    <Tooltip title={<Typography sx={{fontSize: '2em'}}>
-                    {card.name}
-                    </Typography>}>
+    <Link to={`/card/${card.id}`}>
+    <Tooltip title= {
+        <Typography sx={{fontSize: '2em'}}>
+            {card.name}
+        </Typography>}>
 
-        <Card elevation={0}>
+        <Card elevation={3} sx={{
+            overflow: 'visible',
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            '&:hover': {
+                transform: 'translateY(-8px)',
+                boxShadow: 15, // Add shadow for the raised effect
+            },
+        }}>
             <CardActionArea>
                 {isCharacterCard(card)
                     ? <CharacterCardElement {...card}/>
@@ -20,8 +31,9 @@ export const CardElement = (card: CharacterCard | ActionCard) => {
                 }
             </CardActionArea>
         </Card>
-
     </Tooltip>
+
+    </Link>
     )
 }
 
@@ -31,41 +43,14 @@ const CharacterCardElement = (character: CharacterCard) => {
             <img src={character.img_link} 
                 alt={character.name} className="card-img"/>
             <div className="top-icon">
-                <div className="icon-container">
-                    <img src={hpIcon} className="top-icon-img"/>
-                    <div className="text-in-icon"> {character.hp} </div>
-                </div>
+                <TextInIcon icon={hpIcon} text={String(character.hp)}/>
             </div>
         </div>
     )
 }
 
 const ActionCardElement = (action: ActionCard) => {
-    const icon = () => {
-        switch (action.cost.type) {
-            case 'GCG_COST_DICE_ANEMO':
-                return diceIcons.anemoIcon
-            case 'GCG_COST_DICE_CRYO':
-                return diceIcons.cryoIcon
-            case 'GCG_COST_DICE_DENDRO':
-                return diceIcons.dendroIcon
-            case 'GCG_COST_DICE_ELECTRO':
-                return diceIcons.electroIcon
-            case 'GCG_COST_DICE_GEO':
-                return diceIcons.geoIcon
-            case 'GCG_COST_DICE_HYDRO':
-                return diceIcons.hydroIcon
-            case 'GCG_COST_DICE_PYRO':
-                return diceIcons.pyroIcon
-            case 'GCG_COST_DICE_SAME':
-                return diceIcons.sameIcon
-            case 'GCG_COST_DICE_VOID':
-                return diceIcons.voidIcon
-        
-            default:
-                return diceIcons.voidIcon
-        }
-    }
+    const icon = getDiceIcon(action.cost.type)
 
     // TODO
     // Action card with energy cost
@@ -77,10 +62,7 @@ const ActionCardElement = (action: ActionCard) => {
                 alt={action.name}
                 className="card-img"></img>
             <div className="top-icon">
-                <div className="icon-container">
-                    <img src={icon()} className="top-icon-img"/>
-                    <div className="text-in-icon">{action.cost.count}</div>  
-                </div>
+                <TextInIcon icon={icon} text={String(action.cost.count)}/>
             </div>
         </div>
     )

@@ -18,11 +18,13 @@ type DiceType = 'GCG_COST_DICE_VOID' | 'GCG_COST_DICE_SAME'
 
 interface ActionCard extends Card {
     cost: {type: DiceType, count: number}
+    description: string
 }
 
 interface CharacterCard extends Card {
     hp: number
 }
+
 
 interface DetailedDeck {
     name: string
@@ -57,6 +59,11 @@ function isDiceType(type: string): type is DiceType {
     }
 }
 
-export type {CharacterCard, ActionCard, Deck, DetailedDeck, DiceType}
+export type {CharacterCard, 
+             ActionCard, 
+             Deck, 
+             DetailedDeck, 
+             DiceType,
+}
 
 export {isActionCard, isCharacterCard, isDiceType}
