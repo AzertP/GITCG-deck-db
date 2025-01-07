@@ -14,15 +14,28 @@ interface Deck {
 type DiceType = 'GCG_COST_DICE_VOID' | 'GCG_COST_DICE_SAME'
                 | 'GCG_COST_DICE_CRYO' | 'GCG_COST_DICE_ANEMO' |'GCG_COST_DICE_GEO'
                 | 'GCG_COST_DICE_PYRO' | 'GCG_COST_DICE_ELECTRO' | 'GCG_COST_DICE_DENDRO'
-                | 'GCG_COST_DICE_HYDRO'
+                | 'GCG_COST_DICE_HYDRO' | 'GCG_COST_ENERGY'
+
+interface Cost {
+    type: DiceType,
+    count: number
+}
 
 interface ActionCard extends Card {
-    cost: {type: DiceType, count: number}
+    cost: Cost
     description: string
+}
+
+interface Skill {
+    name: string
+    description: string
+    type: string
+    cost: Cost[]
 }
 
 interface CharacterCard extends Card {
     hp: number
+    skills: Skill[]
 }
 
 
@@ -53,6 +66,7 @@ function isDiceType(type: string): type is DiceType {
         case 'GCG_COST_DICE_ELECTRO':
         case 'GCG_COST_DICE_DENDRO':
         case 'GCG_COST_DICE_HYDRO':
+        case 'GCG_COST_ENERGY':
             return true
         default:
             return false
@@ -64,6 +78,8 @@ export type {CharacterCard,
              Deck, 
              DetailedDeck, 
              DiceType,
+             Cost,
+             Skill
 }
 
 export {isActionCard, isCharacterCard, isDiceType}

@@ -21,7 +21,8 @@ const getDiceIcon = (diceType: DiceType) => {
             return diceIcons.sameIcon
         case 'GCG_COST_DICE_VOID':
             return diceIcons.voidIcon
-    
+        case "GCG_COST_ENERGY":
+            return diceIcons.energyIcon
         default:
             return diceIcons.voidIcon
     }

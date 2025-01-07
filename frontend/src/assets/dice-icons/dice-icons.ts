@@ -7,6 +7,7 @@ import pyroIcon from './pyro-icon.png'
 import geoIcon from './geo-icon.png'
 import voidIcon from './void-icon.png'
 import sameIcon from './same-icon.png'
+import energyIcon from './energy-icon.png'
 
 export default {anemoIcon, 
                 cryoIcon, 
@@ -16,5 +17,6 @@ export default {anemoIcon,
                 pyroIcon,
                 geoIcon,
                 voidIcon,
-                sameIcon
+                sameIcon,
+                energyIcon
 }

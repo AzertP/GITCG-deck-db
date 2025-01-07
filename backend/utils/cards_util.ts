@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import gdb, { TcgActionCards, TcgCharacterCards } from '@genshin-db/tcg'
-import {ActionCard, CharacterCard, DiceType, isDiceType} from '../../types/card-types'
+import {ActionCard, CharacterCard, DiceType, isDiceType, Cost, Skill} from '../../types/card-types'
 
 export function isTgcActionCard(card: TcgActionCards | TcgCharacterCards): card is TcgActionCards {
     return 'playcost' in card
@@ -39,6 +39,19 @@ export const convertCharacterCard = (character: TcgCharacterCards) => {
         name: character.name,
         id: character.id,
         hp: character.hp,
+        skills: character.skills.map<Skill>((skill): Skill => {
+            return {
+                cost: skill.playcost.map<Cost>((cost): Cost => {
+                    return {
+                        type: isDiceType(cost.costtype)? cost.costtype : 'GCG_COST_DICE_SAME',
+                        count: cost.count
+                    }
+                }),
+                type: skill.type,
+                name: skill.name,
+                description: skill.description
+            }
+        }),
         img_link: getImageUrl(character.images.filename_cardface)
     }
     return convertedCard
