@@ -1,17 +1,20 @@
 import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
+import { Box, Typography,   
+    List, ListItem, ListItemText, ListItemIcon, 
+    Button} from "@mui/material";
+
 import cardService from "../services/card-service"
 import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../types/card-types"
-import { Box, Grid2, Typography, Card, CardContent, List, ListItem, ListItemText, ListSubheader, ListItemIcon, Divider } from "@mui/material";
 
-import './card-detailed.css'
 import TextInIcon from "./text-in-icon";
 import getDiceIcon from "../utils/get-dice-icon";
+import hpIcon from '../assets/hp-icon.png'
 
 const ActionDescription = (action: ActionCard) => {
-    return <Box padding={3}>
+    return <Box>
             <Box display="flex" alignItems="center">
-                    <Box className="cost-icon">
+                    <Box sx={{width: "50px", height: "auto"}}>
                         <TextInIcon icon={getDiceIcon(action.cost.type)} 
                                     text={String(action.cost.count)}/>
                     </Box>
@@ -26,15 +29,15 @@ const ActionDescription = (action: ActionCard) => {
 }
 
 const SkillLine = (skill: Skill) => {
-    return <ListItem>
+    return <ListItem divider>
         <ListItemIcon>
             <Box width="100px" display="flex" justifyContent="center">
-            {skill.cost.map(cost => {
-                return <Box maxWidth="50px">
-                    <TextInIcon icon={getDiceIcon(cost.type)}
-                        text={String(cost.count)}/>
-                    </Box>
-            })}
+                {skill.cost.map((cost, index) => {
+                    return <Box maxWidth="50px" key={index}>
+                        <TextInIcon icon={getDiceIcon(cost.type)}
+                            text={String(cost.count)}/>
+                        </Box>
+                })}
             </Box>
         </ListItemIcon>
         <ListItemText 
@@ -46,24 +49,35 @@ const SkillLine = (skill: Skill) => {
                     {skill.description}
                 </Typography>
             }/>
-        <ListSubheader sx={{whiteSpace: "nowrap"}}>
-            {skill.type}
-        </ListSubheader>
+
+        <Box padding={1}>
+            <Typography sx={{
+                whiteSpace: "nowrap",
+                color: "gray"
+            }} variant="caption">
+                {skill.type}
+            </Typography>
+        </Box>
     </ListItem>
 }
 
 const CharacterDescription = (character: CharacterCard) => {
-    return <Box padding={2}>
-        <Typography variant="h4">    
-            {character.name}
-        </Typography>
+    return <Box>
+        <Box display="flex" alignItems="center">
+            <Box width="50px" height="auto">
+                <TextInIcon icon={hpIcon} 
+                            text={String(character.hp)}/>
+            </Box>
+            <Typography variant="h4" padding={1}>    
+                {character.name}
+            </Typography>
+        </Box>
         <List>
-            {character.skills.map(skill => 
-            <>
-                <SkillLine {...skill}/> 
-                <Divider variant="middle" component="li" />
-            </>)}
+            {character.skills.map((skill, index) => (
+                <SkillLine key={index} {...skill}/>
+            ))}
         </List>
+        
     </Box>
 }
 
@@ -99,11 +113,14 @@ const CardDetailed = () => {
             }}>
             </Box>
 
-            <Box>
+            <Box width="100%" padding={3}>
                 {isActionCard(card.data)
                     ? <ActionDescription {...card.data}/>
                     : <CharacterDescription {...card.data}/>
                 }
+                <Button href={`https://gi.yatta.moe/en/gcg/${card.data.id}`}>
+                    More details
+                </Button>
             </Box>
         </Box>
     )
