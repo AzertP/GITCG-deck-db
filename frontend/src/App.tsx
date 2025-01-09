@@ -17,7 +17,6 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           textDecoration: 'none',
-          borderRadius: '8%',
         }
       }
     }

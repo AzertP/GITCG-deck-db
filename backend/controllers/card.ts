@@ -1,7 +1,7 @@
 import express from 'express'
 import { actionCards, characterCards, convertActionCard, convertCharacterCard,
         getCardById, isTcgCharacterCard
- } from 'utils/cards_util'
+ } from 'utils/cards-util'
 import { isActionCard } from '../../types/card-types'
 
 const cardRouter = express.Router()

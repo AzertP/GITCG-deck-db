@@ -19,6 +19,7 @@ export const CardElement = (card: CharacterCard | ActionCard) => {
         <Card elevation={3} sx={{
             overflow: 'visible',
             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            borderRadius: '8%',
             '&:hover': {
                 transform: 'translateY(-8px)',
                 boxShadow: 15, // Add shadow for the raised effect

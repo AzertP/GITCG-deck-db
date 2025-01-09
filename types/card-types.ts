@@ -5,10 +5,11 @@ interface Card {
 }
 
 interface Deck {
+    id: number
     name: string
     description: string
     deckcode: string
-    id: number
+    characters: CharacterCard[]
 }
 
 type DiceType = 'GCG_COST_DICE_VOID' | 'GCG_COST_DICE_SAME'
