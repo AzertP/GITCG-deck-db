@@ -1,10 +1,13 @@
 import express from 'express'
 import { decodeDeck } from 'utils/cards-util'
 import { Deck, DetailedDeck } from '../../types/card-types'
-import { DeckSchema } from 'models/deckModel'
+import { DeckSchema } from 'types/deck-type'
 import { deckSchemaToDeck, deckSchemaToDetailed } from 'utils/deck-utils'
+import { DeckModel } from 'models/deck-model'
 
 interface NewDeckQuery {
+    name: string,
+    description: string,
     deckcode: string
 }
 
@@ -12,7 +15,7 @@ const deckData2: DeckSchema[] = [
     {
         id: 0,
         name: "Crime and Punishment",
-        description: "Archetype: Aggro, Combo?",
+        description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent justo mi, efficitur vel aliquam at, faucibus ut urna. Nunc ultrices ante quis turpis accumsan porta. In venenatis enim a quam cursus, eu iaculis risus fringilla. Aenean ultrices at nunc vitae tempus. Cras nec porttitor leo. Mauris laoreet iaculis pellentesque.",
         deckcode: "G1AAyRMMAZDQ0U8NBBHwZ1kWCHDh3WMPCUAw9JcPCVBx9lcPFWFwC7QQC7FAEMURDAAA",
         characters: [432, 19, 29],
         actions: [79,79,89,142,355,147,151,151,343,343,180,180,
@@ -34,7 +37,9 @@ const deckData2: DeckSchema[] = [
 const deckRouter = express.Router()
 
 const isNewDeckQuery = (data: any): data is NewDeckQuery => {
-    return 'deckcode' in data
+    return ('deckcode' in data 
+        && 'description' in data
+        && 'name' in data)
 }
 
 deckRouter.get("/", (_req, res) => {
@@ -65,20 +70,31 @@ deckRouter.post("/submit", async (req, res) => {
     const data = req.body
     
     if (isNewDeckQuery(data)) {
-        res.send("okay")
         const deck = await decodeDeck(data.deckcode)
-        if (deck !== undefined) {
-            deck.characters.forEach(character => {
-                console.log(character.name)
-            })
-            console.log('==================')
-            deck.actions.forEach(action => {
-                console.log(action.name)
-            })
+        if (deck === undefined) {
+            res.status(400).json({error: "Invalid deck code"})
+            return
         }
+        
+        deck.characters.forEach(character => {
+            console.log(character.name)
+        })
+        console.log('==================')
+        deck.actions.forEach(action => {
+            console.log(action.name)
+        })
+
+        const newDeck = new DeckModel({
+            ...data,
+            characters: deck.characters.map(character => character.id),
+            actions: deck.actions.map(action => action.id)
+        })
+        
+        const savedDeck = await newDeck.save()
+        res.status(201).json(savedDeck)
     }
     else {
-        res.status(400).json({error: "Invalid request"})
+        res.status(400).json({error: "Invalid request, missing field(s)"})
     } 
 })
 

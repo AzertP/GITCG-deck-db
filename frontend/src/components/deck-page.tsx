@@ -4,7 +4,7 @@ import deckService from "../services/deck-service"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
 import { CardElement } from "./card-element"
-import { Box, Grid2, List, ListItem, ListItemIcon, Typography } from "@mui/material"
+import { Box, Grid2, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
 
 const DeckElement = (deck: Deck) => {
     return <ListItem divider>
@@ -17,17 +17,17 @@ const DeckElement = (deck: Deck) => {
                 ))}
             </Box>
         </ListItemIcon>
-        <Box display="flex" flexDirection="column" padding={2}>
-                <Typography variant="h4" component={Link} to={`${deck.id}`} gutterBottom>
-                    {deck.name}
-                </Typography>
-                <Typography variant="body1" color="textSecondary">
-                    Deck Code: {deck.deckcode}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                    {deck.description}
-                </Typography>
-        </Box>
+        <ListItemText primary={
+            <Typography variant="h4" component={Link} to={`${deck.id}`} gutterBottom>
+                {deck.name}
+            </Typography>
+        }
+        
+        secondary={
+            <Typography variant="body2" color="textSecondary">
+                {deck.description}
+            </Typography>
+        }/>
 </ListItem>
 }
 
@@ -44,24 +44,24 @@ const DetailedDeckView = () => {
         </div>
     }
 
-    return <div>
-        <h2>{deck.data.name}</h2>
-        <p> {deck.data.description} </p>
-        <h2>Characters</h2>
-        <Grid2 container spacing={3}>
+    return <Box>
+        <Typography variant="h2" sx={{fontWeight: 550}}>{deck.data.name}</Typography>
+        <Typography variant="body1"> {deck.data.description} </Typography>
+        <Typography variant="h5" sx={{fontWeight: 550}}>Characters</Typography>
+        <Grid2 container spacing={3} justifyContent="center">   
             {deck.data.characters.map(character => 
                 <Grid2 key={character.id}>
                     <CardElement {...character}/>
                 </Grid2>)}
         </Grid2>
-        <h4>Action Cards</h4>
+        <Typography variant="h5" sx={{fontWeight: 550}}>Action Cards</Typography>
         <Grid2 container spacing={2}>
             {deck.data.actions.map((action, index) => 
                 <Grid2 key={index}>
                     <CardElement {...action}/>
                 </Grid2>)}
         </Grid2>
-    </div>
+    </Box>
 }
 
 const DeckList = ({decks}: {decks: Deck[]}) => {

@@ -1,4 +1,4 @@
-import { DeckSchema } from "models/deckModel";
+import { DeckSchema } from "types/deck-type";
 import { Deck, CharacterCard, ActionCard, DetailedDeck } from "../../types/card-types";
 import { convertActionCard, convertCharacterCard, 
         findActionCardByShareID, findCharacterCardByShareID } from "./cards-util";

@@ -18,8 +18,10 @@
     "@genshin-db/tcg": "^5.1.10",
     "axios": "^1.7.9",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "genshin-db": "^5.1.10",
+    "mongoose": "^8.9.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2"
   },
