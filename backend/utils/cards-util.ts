@@ -37,7 +37,7 @@ function getImageUrl(filename: string) {
 export const convertCharacterCard = (character: TcgCharacterCards) => {
     const convertedCard: CharacterCard = {
         name: character.name,
-        id: character.shareid,
+        id: character.id,
         hp: character.hp,
         skills: character.skills.map<Skill>((skill): Skill => {
             return {
@@ -75,7 +75,7 @@ export const convertActionCard = (action: TcgActionCards) => {
 
     const convertedCard: ActionCard = {
         name: action.name,
-        id: action.shareid,
+        id: action.id,
         cost: newCost,
         description: action.description,
         img_link: getImageUrl(action.images.filename_cardface)

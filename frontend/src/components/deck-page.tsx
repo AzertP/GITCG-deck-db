@@ -35,7 +35,7 @@ const DetailedDeckView = () => {
     const {id} = useParams()
     const deck = useQuery({
         queryKey: ['getDeckById'],
-        queryFn: () => deckService.getDeckById(Number(id))
+        queryFn: () => deckService.getDeckById(id? id : 'undefined')
     })
 
     if (deck.isLoading || deck.data === undefined) {

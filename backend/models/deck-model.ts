@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 
 import {MONGODB_URI} from "../utils/config";
+import { DBDeck } from "types/deck-type";
 
 console.log('connecting to', MONGODB_URI);
 mongoose.connect(MONGODB_URI);
 
-const deckSchema = new mongoose.Schema({
+const DeckSchema = new mongoose.Schema<DBDeck>({
 
     name: {
         type: String,
@@ -20,4 +21,12 @@ const deckSchema = new mongoose.Schema({
     actions: [Number]
 })
 
-export const DeckModel = mongoose.model('Deck', deckSchema);
+DeckSchema.set('toObject', {
+    transform: (_document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject._id
+        delete returnedObject.__v
+    }
+})
+
+export const DeckModel = mongoose.model<DBDeck>('Deck', DeckSchema);

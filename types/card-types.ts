@@ -5,7 +5,7 @@ interface Card {
 }
 
 interface Deck {
-    id: number
+    id: string
     name: string
     description: string
     deckcode: string

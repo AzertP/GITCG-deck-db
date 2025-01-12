@@ -8,7 +8,7 @@ const getAllDeck = async () => {
     return response.data
 }
 
-const getDeckById = async (id: number) => {
+const getDeckById = async (id: string) => {
     const response = await axios.get<DetailedDeck>(`${base_URL}/${id}`)
     return response.data
 }
