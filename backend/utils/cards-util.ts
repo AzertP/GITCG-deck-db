@@ -86,14 +86,21 @@ export const convertActionCard = (action: TcgActionCards) => {
 export const characterCards = getAllCharacterCards()
 export const actionCards = getAllActionCards()
 
-export const findCharacterCardByShareID = (id: number) => {
+// Find card by share ID
+const findCharacterCardByShareID = (id: number) => {
     return characterCards.find(card => card.shareid === id)
 }
-
-export const findActionCardByShareID = (id: number) => {
+const findActionCardByShareID = (id: number) => {
     return actionCards.find(card => card.shareid === id)
 }
 
+// Find card by ID
+export const findCharacterCardByID = (id: number) => {
+    return characterCards.find(card => card.id === id)
+}
+export const findActionCardByID = (id: number) => {
+    return actionCards.find(card => card.id === id)
+}
 export const getCardById = (id: number) => {
     const card = characterCards.find(card => card.id === id)
     if (card === undefined)

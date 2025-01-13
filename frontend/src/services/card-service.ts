@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ActionCard, CharacterCard} from '../../../types/card-types'
+import {ActionCard, CardStats, CharacterCard} from '../../../types/card-types'
 
 const base_URL = 'http://localhost:3001/api/card'
 
@@ -16,7 +16,7 @@ const getActionCards = async () => {
 }
 
 const getCardById = async (id: number) => {
-    const response = await axios.get<ActionCard | CharacterCard>(`${base_URL}/${id}`)
+    const response = await axios.get<CardStats>(`${base_URL}/${id}`)
     return response.data
 }
 

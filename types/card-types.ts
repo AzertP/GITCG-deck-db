@@ -39,13 +39,17 @@ interface CharacterCard extends Card {
     skills: Skill[]
 }
 
-
 interface DetailedDeck {
     name: string
     deckcode: string
     description: string
     characters: CharacterCard[]
     actions: ActionCard[]
+}
+
+interface CardStats {
+    card: CharacterCard | ActionCard
+    appears_in: Deck[]
 }
 
 function isCharacterCard(card: any): card is CharacterCard {
@@ -80,7 +84,8 @@ export type {CharacterCard,
              DetailedDeck, 
              DiceType,
              Cost,
-             Skill
+             Skill,
+             CardStats
 }
 
 export {isActionCard, isCharacterCard, isDiceType}

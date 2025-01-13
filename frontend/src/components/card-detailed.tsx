@@ -10,6 +10,7 @@ import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../types/c
 import TextInIcon from "./text-in-icon";
 import getDiceIcon from "../utils/get-dice-icon";
 import hpIcon from '../assets/hp-icon.png'
+import SmallDecklist from "./small-decklist";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -22,9 +23,11 @@ const ActionDescription = (action: ActionCard) => {
                         {action.name}
                     </Typography>
             </Box>
-            <Typography>
-                {action.description}
-            </Typography>
+            <Box padding={1}>
+                <Typography>
+                    {action.description}
+                </Typography>
+            </Box>
         </Box>
 }
 
@@ -84,20 +87,23 @@ const CharacterDescription = (character: CharacterCard) => {
 const CardDetailed = () => {
     const {id} = useParams()
 
-    const card = useQuery({
+    const cardStat = useQuery({
         queryKey: ['singleCard'],
         queryFn: () => cardService.getCardById(Number(id))
     })
 
-    if (card.isLoading || card.error || card.data === undefined) {
+    if (cardStat.isLoading || cardStat.error || cardStat.data === undefined) {
         return <div>
             Is loading...
         </div>
     }
 
-    console.log(card.data)
+    console.log(cardStat.data)
+    const card = cardStat.data.card
+    const appears_in = cardStat.data.appears_in
 
     return (
+        <>
         <Box padding={4} 
              display="flex" 
              sx={{
@@ -105,7 +111,7 @@ const CardDetailed = () => {
              }}
              flexDirection={{ xs: "column", sm: "row" }}
         >
-            <Box component="img" src={card.data?.img_link} sx={{
+            <Box component="img" src={card.img_link} sx={{
                 // flex: "1 1 30%",
                 width: "250px",
                 height: "auto",
@@ -114,15 +120,22 @@ const CardDetailed = () => {
             </Box>
 
             <Box width="100%" padding={3}>
-                {isActionCard(card.data)
-                    ? <ActionDescription {...card.data}/>
-                    : <CharacterDescription {...card.data}/>
+                {isActionCard(card)
+                    ? <ActionDescription {...card}/>
+                    : <CharacterDescription {...card}/>
                 }
-                <Button href={`https://gi.yatta.moe/en/gcg/${card.data.id}`}>
+                <Button href={`https://gi.yatta.moe/en/gcg/${card.id}`}>
                     More details
                 </Button>
             </Box>
         </Box>
+        <Box padding={1}>
+            <Typography variant="h4">
+                Appears in
+            </Typography>
+            <SmallDecklist decks={appears_in}/>
+        </Box>
+        </>
     )
 }
 

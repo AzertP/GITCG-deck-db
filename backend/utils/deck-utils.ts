@@ -1,19 +1,21 @@
-import { DeckSchema } from "types/deck-type";
+import { DeckSchema } from '../types/deck-type';
 import { Deck, CharacterCard, ActionCard, DetailedDeck } from "../../types/card-types";
 import { convertActionCard, convertCharacterCard, 
-        findActionCardByShareID, findCharacterCardByShareID } from "./cards-util";
+        findActionCardByID, findCharacterCardByID } from "./cards-util";
 
 export const deckSchemaToDeck = (deck: DeckSchema): Deck | undefined => {
     let characters: CharacterCard[] = []
 
     deck.characters.forEach(shareID => {
-        const character = findCharacterCardByShareID(shareID)
+        const character = findCharacterCardByID(shareID)
+        // console.log(character)
         if (character !== undefined) {
             characters.push(convertCharacterCard(character))
         }
     })
 
     if (characters.length !== 3) {
+        console.log("Invalid deck")
         return undefined
     }
 
@@ -30,7 +32,7 @@ export const deckSchemaToDetailed = (deck: DeckSchema): DetailedDeck | undefined
     let characters: CharacterCard[] = []
 
     deck.characters.forEach(shareID => {
-        const character = findCharacterCardByShareID(shareID)
+        const character = findCharacterCardByID(shareID)
         if (character !== undefined) {
             characters.push(convertCharacterCard(character))
         }
@@ -39,7 +41,7 @@ export const deckSchemaToDetailed = (deck: DeckSchema): DetailedDeck | undefined
     let actions: ActionCard[] = []
 
     deck.actions.forEach(shareID => {
-        const action = findActionCardByShareID(shareID)
+        const action = findActionCardByID(shareID)
         if (action !== undefined) {
             actions.push(convertActionCard(action))
         }

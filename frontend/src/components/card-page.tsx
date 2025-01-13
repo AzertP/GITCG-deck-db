@@ -43,13 +43,6 @@ const CardPage = () => {
     
     const [displayCharacter, setDisplayCharacter] = useState(true)
 
-    // useEffect(() => {
-    //     cardService.getCharacterCards().then(
-    //         result => setCharacters(result)
-    //     )
-    // }, [])
-    // console.log(characters)
-
     if (displayCharacter) {
         return (<div>
             <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
