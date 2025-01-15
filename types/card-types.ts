@@ -2,6 +2,7 @@ interface Card {
     name: string
     id: number
     img_link: string
+    tags: string[]
 }
 
 interface Deck {

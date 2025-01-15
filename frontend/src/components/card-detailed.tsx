@@ -116,7 +116,7 @@ const CardDetailed = () => {
                 width: "250px",
                 height: "auto",
                 objectFit: "scale-down"
-            }}>
+            }} alt={card.name}>
             </Box>
 
             <Box width="100%" padding={3}>

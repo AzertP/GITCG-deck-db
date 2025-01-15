@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
-import { Button, Grid2 } from "@mui/material"
+import { useMemo, useState } from "react"
+import { Box, Button, Grid2 } from "@mui/material"
 
 import cardService from '../services/card-service'
 import { CardElement } from "./card-element"
 import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
+import FilterCharacterBoard from "./filter-character"
+import useCardStore from "../store/card-store"
 
 // const TopButtons = () => {
 
@@ -40,23 +42,36 @@ const CardPage = () => {
         queryFn: cardService.getActionCards,
         staleTime: 12000
     })
-    
-    const [displayCharacter, setDisplayCharacter] = useState(true)
 
-    if (displayCharacter) {
-        return (<div>
+    const selectedTags = useCardStore(state => state.selectedTags)
+
+    const filterCards = (card: CharacterCard | ActionCard) => {
+        if (Object.keys(selectedTags).length === 0) return true
+        return Object.entries(selectedTags).every(([_group, tag]) => {
+            if (!tag) return true
+            return card.tags.includes(tag)
+        })
+    }
+    // console.log('selected', selectedTags)
+    // console.log('key', Object.keys(selectedTags))
+    // console.log('entries', Object.entries(selectedTags))
+
+    const filteredCharacterCards = useMemo(() => characterCards.data?.filter(filterCards),
+                                        [characterCards.data, selectedTags])
+    const filteredActionCards = useMemo(() => actionCards.data?.filter(filterCards),
+                                        [actionCards.data, selectedTags])
+
+    const [displayCharacter, setDisplayCharacter] = useState(true)
+    // console.log("Hi")
+
+    return (
+        <div>
             <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
             <Button onClick={() => setDisplayCharacter(false)}>Action</Button>
-            <CardGrid cardList={characterCards.data}/>
-        </div>)
-    }
-    else {
-        return (<div>
-            <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
-            <Button onClick={() => setDisplayCharacter(false)}>Action</Button>
-            <CardGrid cardList={actionCards.data}/>
-        </div>)
-    }
+            <FilterCharacterBoard />
+            <CardGrid cardList={displayCharacter ? filteredCharacterCards : filteredActionCards} />
+        </div>
+    )
 }
 
 export default CardPage 

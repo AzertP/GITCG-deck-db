@@ -39,6 +39,7 @@ export const convertCharacterCard = (character: TcgCharacterCards) => {
         name: character.name,
         id: character.id,
         hp: character.hp,
+        tags: character.tagstext,
         skills: character.skills.map<Skill>((skill): Skill => {
             return {
                 cost: skill.playcost.map<Cost>((cost): Cost => {
@@ -77,6 +78,7 @@ export const convertActionCard = (action: TcgActionCards) => {
         name: action.name,
         id: action.id,
         cost: newCost,
+        tags: action.tagstext,
         description: action.description,
         img_link: getImageUrl(action.images.filename_cardface)
     }

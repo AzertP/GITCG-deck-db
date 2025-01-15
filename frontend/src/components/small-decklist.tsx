@@ -1,6 +1,7 @@
 import { Deck } from "../../../types/card-types";
 import {Link} from "react-router-dom";
-import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } 
+        from "@mui/material";
 
 const DeckItem = ({deck} : {deck: Deck}) => {
     return <ListItem>
