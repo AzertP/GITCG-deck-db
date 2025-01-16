@@ -1,12 +1,10 @@
 import { Box, Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
-import { elementTags, weaponTags, allCharacterTags } from '../utils/tags'
-import useCardStore from '../store/card-store'
-import { useCallback, memo } from 'react'
-import useCounterStore from '../store/counter-store'
+import { allCharacterTags } from '../../utils/tags'
+import useCharacterStore from '../../store/characterStore'
 
 const FilterCharacterBoard = () => {
-    const selectedTags = useCardStore(state => state.selectedTags)
-    const toggleTag = useCardStore(state => state.toggleTag)
+    const selectedTags = useCharacterStore(state => state.selectedTags)
+    const toggleTag = useCharacterStore(state => state.toggleTag)
 
     const handleChange = (group: string) => 
                         (_event: React.MouseEvent<HTMLElement>, newTag: string) => {

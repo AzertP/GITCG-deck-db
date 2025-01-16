@@ -3,7 +3,7 @@ import { Deck } from "../../../types/card-types"
 import deckService from "../services/deck-service"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
-import { CardElement } from "./card-element"
+import { CardElement } from "./cardElement"
 import { Box, Grid2, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
 
 const DeckElement = (deck: Deck) => {

@@ -5,7 +5,7 @@ import { CharacterCard, ActionCard, isCharacterCard } from "../../../types/card-
 import getDiceIcon from "../utils/get-dice-icon"
 import hpIcon from "../assets/hp-icon.png"
 
-import './card-element.css'
+import './cardElement.css'
 import TextInIcon from "./text-in-icon"
 
 export const CardElement = (card: CharacterCard | ActionCard) => {

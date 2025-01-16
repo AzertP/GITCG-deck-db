@@ -3,14 +3,13 @@ import { useMemo, useState } from "react"
 import { Box, Button, Grid2 } from "@mui/material"
 
 import cardService from '../services/card-service'
-import { CardElement } from "./card-element"
+import { CardElement } from "./cardElement"
 import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
-import FilterCharacterBoard from "./filter-character"
-import useCardStore from "../store/card-store"
+import FilterCharacterBoard from "./filter-boards/filterCharacter"
 
-// const TopButtons = () => {
-
-// }
+import useCardStore from "../store/characterStore"
+import useActionStore from "../store/actionStore"
+import FilterActionBoard from "./filter-boards/filterAction"
 
 const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefined}) => {
     if (cardList === undefined) 
@@ -43,24 +42,28 @@ const CardPage = () => {
         staleTime: 12000
     })
 
-    const selectedTags = useCardStore(state => state.selectedTags)
+    const selectedCharacterTags = useCardStore(state => state.selectedTags)
+    const selectedActionTag = useActionStore(state => state.selectedTag)
 
-    const filterCards = (card: CharacterCard | ActionCard) => {
-        if (Object.keys(selectedTags).length === 0) return true
-        return Object.entries(selectedTags).every(([_group, tag]) => {
+    const filterCharacter = (card: CharacterCard) => {
+        if (Object.keys(selectedCharacterTags).length === 0) return true
+        return Object.entries(selectedCharacterTags).every(([_group, tag]) => {
             if (!tag) return true
             return card.tags.includes(tag)
         })
     }
-    // console.log('selected', selectedTags)
-    // console.log('key', Object.keys(selectedTags))
-    // console.log('entries', Object.entries(selectedTags))
 
-    const filteredCharacterCards = useMemo(() => characterCards.data?.filter(filterCards),
-                                        [characterCards.data, selectedTags])
-    const filteredActionCards = useMemo(() => actionCards.data?.filter(filterCards),
-                                        [actionCards.data, selectedTags])
-
+    console.log(selectedActionTag)
+    const filterAction = (card: ActionCard) => {
+        if (!selectedActionTag) return true
+        return card.tags.includes(selectedActionTag)
+    }
+    
+    const filteredCharacterCards = useMemo(() => characterCards.data?.filter(filterCharacter),
+                                        [characterCards.data, selectedCharacterTags])
+    const filteredActionCards = useMemo(() => actionCards.data?.filter(filterAction),
+                                        [actionCards.data, selectedActionTag])
+    console.log(filteredActionCards)
     const [displayCharacter, setDisplayCharacter] = useState(true)
     // console.log("Hi")
 
@@ -68,7 +71,7 @@ const CardPage = () => {
         <div>
             <Button onClick={() => setDisplayCharacter(true)}>Character</Button>
             <Button onClick={() => setDisplayCharacter(false)}>Action</Button>
-            <FilterCharacterBoard />
+            {displayCharacter? <FilterCharacterBoard /> : <FilterActionBoard />}
             <CardGrid cardList={displayCharacter ? filteredCharacterCards : filteredActionCards} />
         </div>
     )

@@ -6,10 +6,32 @@ const allCharacterTags = {
     ['arkhe']: ['Arkhe: Pneuma', 'Arkhe: Ousia']
 }
 
+const allActionTags = [
+    'Talent',
+    'Combat Action',
+    'Food',
+    'Artifact',
+    'Weapon',
+    // 'Bow',
+    'Arcane Legend',
+    // 'Sword',
+    'Companion',
+    // 'Catalyst',
+    // 'Claymore',
+    'Technique',
+    'Location',
+    'Elemental Resonance',
+    // 'Polearm',
+    'Item',
+    // 'Shield',
+    // 'Arkhe: Ousia'
+]
+
 const elementTags = ['Hydro', 'Pyro', 'Electro', 'Geo', 'Dendro', 'Anemo', 'Cryo']
 const weaponTags = ['Sword', 'Bow', 'Claymore', 'Catalyst', 'Polearm', 'Other Weapons']
 const regionTags = ['Mondstadt', 'Sumeru', 'Inazuma', 'Liyue', 'Fontaine', 'Natlan']
 const factionTags = ['Monster', 'Fatui', 'The Eremites', 'Hilichurl', 'Consecrated Beast']
 const arkheTags = ['Arkhe: Pneuma', 'Arkhe: Ousia']
 
-export { allCharacterTags, elementTags, weaponTags, regionTags, factionTags, arkheTags }
+export { allCharacterTags, elementTags, weaponTags, regionTags, 
+            factionTags, arkheTags, allActionTags }

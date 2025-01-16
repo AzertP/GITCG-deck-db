@@ -10,7 +10,7 @@ import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../types/c
 import TextInIcon from "./text-in-icon";
 import getDiceIcon from "../utils/get-dice-icon";
 import hpIcon from '../assets/hp-icon.png'
-import SmallDecklist from "./small-decklist";
+import SmallDecklist from "./smallDecklist";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -86,7 +86,8 @@ const CharacterDescription = (character: CharacterCard) => {
 
 const CardDetailed = () => {
     const {id} = useParams()
-
+    console.log('Hi', id)
+    
     const cardStat = useQuery({
         queryKey: ['singleCard'],
         queryFn: () => cardService.getCardById(Number(id))

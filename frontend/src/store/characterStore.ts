@@ -1,13 +1,13 @@
 import { create } from "zustand";
 
-interface CardStore {
+interface CharacterStore {
     // tags: string[]
     selectedTags: {[group: string]: string}
     toggleTag: (group: string, tag: string) => void
     // cards: CharacterCard[]
 }
 
-const useCardStore = create<CardStore>((set) => ({
+const useCharacterStore = create<CharacterStore>((set) => ({
     // tags: allTags,
     selectedTags: {},
 
@@ -21,4 +21,4 @@ const useCardStore = create<CardStore>((set) => ({
     })
 }));
 
-export default useCardStore;
+export default useCharacterStore;

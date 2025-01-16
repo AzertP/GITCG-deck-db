@@ -6,10 +6,9 @@ import {
 import { AppBar, Button, Container, Toolbar, 
         createTheme, ThemeProvider } from '@mui/material'
 
-import CardPage from './components/card-page'
-import DeckPage from './components/deck-page'
-import './App.css'
-import CardDetailed from './components/card-detailed'
+import CardPage from './components/cardPage'
+import DeckPage from './components/deckPage'
+import CardDetailed from './components/cardDetailed'
 
 const theme = createTheme({
   components: {
