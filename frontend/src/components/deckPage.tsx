@@ -1,10 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { Deck } from "../../../types/card-types"
 import deckService from "../services/deck-service"
+import useDeckPageStore from "../store/deckPageStore"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
 import { CardElement } from "./cardElement"
-import { Box, Grid2, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
+import { Box, Grid2, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from "@mui/material"
+import { useMemo } from "react"
+import LoadingScreen from "./loading"
 
 const DeckElement = (deck: Deck) => {
     return <ListItem divider>
@@ -18,7 +21,19 @@ const DeckElement = (deck: Deck) => {
             </Box>
         </ListItemIcon>
         <ListItemText primary={
-            <Typography variant="h4" component={Link} to={`${deck.id}`} gutterBottom>
+            <Typography variant="h4" component={Link} to={`${deck.id}`}
+                        sx={{
+                            textDecoration: 'none', // Remove underline
+                            color: 'primary', // Use primary color
+                            fontWeight: 'bold', // Bold text
+                            '&:visited': {
+                                color: 'primary.light', 
+                            },
+                            '&:hover': {
+                                color: 'primary.main', 
+                                textDecoration: 'underline',
+                            },
+                        }}>
                 {deck.name}
             </Typography>
         }
@@ -39,9 +54,7 @@ const DetailedDeckView = () => {
     })
 
     if (deck.isLoading || deck.data === undefined) {
-        return <div>
-            Loading...
-        </div>
+        return <LoadingScreen/>
     }
 
     return <Box>
@@ -64,12 +77,30 @@ const DetailedDeckView = () => {
     </Box>
 }
 
-const DeckList = ({decks}: {decks: Deck[]}) => {
-    console.log(decks)
-    return <List>
-        {decks.map(deck => 
-            <DeckElement key={deck.id} {...deck}/>)}
-    </List>
+const DeckList = ({decks, page, pageSize, setPage}: {decks: Deck[], 
+                                                    page: number, 
+                                                    pageSize: number,
+                                                    setPage: (newPage: number) => void}) => {
+    const currentCards = useMemo(() => {
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        return decks.slice(startIndex, endIndex)
+    }, [page])
+
+    return <Box>
+        <List>
+            {currentCards.map(deck => 
+                <DeckElement key={deck.id} {...deck}/>)}
+        </List>
+
+        <Box display="flex" justifyContent="center" padding={2}>
+            <Pagination count={Math.ceil(decks.length / pageSize)} 
+                        variant="outlined" 
+                        color="primary"
+                        onChange={(_e, newPage) => setPage(newPage)}
+                        page={page}/>
+        </Box>
+    </Box>
 }
 
 const DeckPage = () => {
@@ -78,15 +109,18 @@ const DeckPage = () => {
         queryFn: deckService.getAllDeck
     })
 
+    const {currentPage, pageLimit, setCurrentPage} = useDeckPageStore()
+
     if (decks.isLoading || decks.data === undefined) {
-        return <div>
-            Loading...
-        </div>
+        return <LoadingScreen/>
     }
  
     return (<div>
         <Routes>
-            <Route index element={<DeckList decks={decks.data}/>}/>
+            <Route index element={<DeckList decks={decks.data}
+                                            page={currentPage}
+                                            pageSize={pageLimit}
+                                            setPage={setCurrentPage}/>}/>
             <Route path=":id" element={<DetailedDeckView/>}/>
         </Routes>
     </div>)

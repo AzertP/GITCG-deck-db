@@ -11,6 +11,7 @@ import TextInIcon from "./text-in-icon";
 import getDiceIcon from "../utils/get-dice-icon";
 import hpIcon from '../assets/hp-icon.png'
 import SmallDecklist from "./smallDecklist";
+import LoadingScreen from "./loading";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -94,9 +95,7 @@ const CardDetailed = () => {
     })
 
     if (cardStat.isLoading || cardStat.error || cardStat.data === undefined) {
-        return <div>
-            Is loading...
-        </div>
+        return <LoadingScreen/>
     }
 
     console.log(cardStat.data)
