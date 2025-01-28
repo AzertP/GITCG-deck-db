@@ -5,8 +5,8 @@ import useDeckPageStore from "../store/deckPageStore"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
 import { CardElement } from "./cardElement"
-import { Box, Grid2, List, ListItem, ListItemIcon, ListItemText, Pagination, Typography } from "@mui/material"
-import { useMemo } from "react"
+import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, Pagination, Snackbar, Typography } from "@mui/material"
+import { useMemo, useState } from "react"
 import LoadingScreen from "./loading"
 
 const DeckElement = (deck: Deck) => {
@@ -53,10 +53,21 @@ const DetailedDeckView = () => {
         queryFn: () => deckService.getDeckById(id? id : 'undefined')
     })
 
+    const [copied, setCopied] = useState(false)
+
+    
+    const handleCopy = () => {
+        if (deck.data === undefined) return
+
+        navigator.clipboard.writeText(deck.data.deckcode)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000);
+    }
+
     if (deck.isLoading || deck.data === undefined) {
         return <LoadingScreen/>
     }
-
+    
     return <Box>
         <Typography variant="h2" sx={{fontWeight: 550}}>{deck.data.name}</Typography>
         <Typography variant="body1"> {deck.data.description} </Typography>
@@ -74,6 +85,26 @@ const DetailedDeckView = () => {
                     <CardElement {...action}/>
                 </Grid2>)}
         </Grid2>
+        
+        {/* <Typography variant="h5"> Deckcode </Typography> */}
+        <Box display="flex" justifyContent="center" alignContent="center" padding={5}>
+            {/* <Typography color="primary" bgcolor="ButtonFace"> Deckcode: </Typography> */}
+            <Typography alignContent="center" whiteSpace="pre-wrap"
+                        sx={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            border: "1px black solid"
+                        }}>
+                {deck.data.deckcode}
+            </Typography>
+            <Button variant="contained" sx={{borderRadius: 0}} onClick={handleCopy}>
+                {copied? "Copied" : "Copy"}
+            </Button>
+        </Box>
+        <Snackbar
+            anchorOrigin={{"horizontal": "center", "vertical": "bottom"}}
+            open={copied}
+            message={"Copied to clipboard"}/>
     </Box>
 }
 
