@@ -1,13 +1,13 @@
-import { useQuery } from "@tanstack/react-query"
 import { Deck } from "../../../types/card-types"
-import deckService from "../services/deck-service"
 import useDeckPageStore from "../store/deckPageStore"
 
 import { Link, Route, Routes, useParams } from "react-router-dom"
 import { CardElement } from "./cardElement"
-import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, Pagination, Snackbar, Typography } from "@mui/material"
+import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, 
+            Pagination, Snackbar, Typography } from "@mui/material"
 import { useMemo, useState } from "react"
 import LoadingScreen from "./loading"
+import { useDeckByIdQuery, useDecksQuery } from "../queries/queries"
 
 const DeckElement = (deck: Deck) => {
     return <ListItem divider>
@@ -48,10 +48,7 @@ const DeckElement = (deck: Deck) => {
 
 const DetailedDeckView = () => {
     const {id} = useParams()
-    const deck = useQuery({
-        queryKey: ['getDeckById'],
-        queryFn: () => deckService.getDeckById(id? id : 'undefined')
-    })
+    const deck = useDeckByIdQuery(id)
 
     const [copied, setCopied] = useState(false)
 
@@ -135,10 +132,7 @@ const DeckList = ({decks, page, pageSize, setPage}: {decks: Deck[],
 }
 
 const DeckPage = () => {
-    const decks = useQuery({
-        queryKey: ['getDecks'],
-        queryFn: deckService.getAllDeck
-    })
+    const decks = useDecksQuery()
 
     const {currentPage, pageLimit, setCurrentPage} = useDeckPageStore()
 

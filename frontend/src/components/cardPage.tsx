@@ -1,18 +1,18 @@
-import { useQuery } from "@tanstack/react-query"
 import { useEffect, useMemo } from "react"
 import { Box, Button, Collapse, Grid2, Pagination, TextField } from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
-import cardService from '../services/card-service'
-import { CardElement } from "./cardElement"
 import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
 
-import useCardPageStore from "../store/cardPageStore"
-import useCharacterStore from "../store/characterStore"
-import useActionStore from "../store/actionStore"
+import { CardElement } from "./cardElement"
 import FilterActionBoard from "./filter-boards/filterAction"
 import FilterCharacterBoard from "./filter-boards/filterCharacter"
 import LoadingScreen from "./loading"
+
+import useCharacterStore from "../store/characterStore"
+import useActionStore from "../store/actionStore"
+import useCardPageStore from "../store/cardPageStore"
+import { useActionsQuery, useCharactersQuery } from "../queries/queries"
 
 const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefined}) => {
     if (cardList === undefined) 
@@ -33,21 +33,8 @@ const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefi
 }
 
 const CardPage = () => {
-    const characterCards = useQuery({
-        queryKey: ['characterCards'],
-        queryFn: cardService.getCharacterCards,
-        staleTime: 12000
-    })
-
-    const actionCards = useQuery({
-        queryKey: ['actionCards'],
-        queryFn: cardService.getActionCards,
-        staleTime: 12000
-    })
-
-    // const [displayCharacter, setDisplayCharacter] = useState(true)
-    // const [showFilter, setShowFilter] = useState(false)
-    // const [searchQuery, setSearchQuery] = useState('');
+    const characterCards = useCharactersQuery()
+    const actionCards = useActionsQuery()
 
     const {displayCharacter, setDisplayCharacter, 
             showFilter, toggleFilter, 
@@ -82,7 +69,7 @@ const CardPage = () => {
         const endIndex = startIndex + pageLimit;
         return displayCharacter ? filteredCharacterCards?.slice(startIndex, endIndex) : filteredActionCards?.slice(startIndex, endIndex);
     }, [displayCharacter, filteredCharacterCards, filteredActionCards, currentPage, pageLimit]);
-    console.log(currentPage)
+    // console.log(currentPage)
     // console.log("Hi")
 
     

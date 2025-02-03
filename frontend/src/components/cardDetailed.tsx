@@ -12,6 +12,7 @@ import getDiceIcon from "../utils/get-dice-icon";
 import hpIcon from '../assets/hp-icon.png'
 import SmallDecklist from "./smallDecklist";
 import LoadingScreen from "./loading";
+import NotFoundPage from "./404page";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -87,18 +88,23 @@ const CharacterDescription = (character: CharacterCard) => {
 
 const CardDetailed = () => {
     const {id} = useParams()
-    console.log('Hi', id)
     
     const cardStat = useQuery({
         queryKey: ['singleCard'],
         queryFn: () => cardService.getCardById(Number(id))
     })
+    
+    if (cardStat.isError) {
+        console.log('error?')
+        return <NotFoundPage/>
+    }
 
-    if (cardStat.isLoading || cardStat.error || cardStat.data === undefined) {
+    if (cardStat.isLoading || !cardStat.data) {
         return <LoadingScreen/>
     }
 
-    console.log(cardStat.data)
+
+
     const card = cardStat.data.card
     const appears_in = cardStat.data.appears_in
 
