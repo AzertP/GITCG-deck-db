@@ -21,7 +21,7 @@ function App() {
       <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
           <CssBaseline/>
-          <BrowserRouter>
+          <BrowserRouter basename='/'>
           <div>
             <AppBar position='sticky'>
               <Toolbar>

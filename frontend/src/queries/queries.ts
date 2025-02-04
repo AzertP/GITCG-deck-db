@@ -13,12 +13,17 @@ export const useActionsQuery = () => useQuery({
     queryFn: cardService.getActionCards
 })
 
+export const useCardIdQuery = (id: string | undefined) => useQuery({
+    queryKey: ['cardId'],
+    queryFn: () => cardService.getCardById(Number(id))
+})
+
 export const useDeckByIdQuery = (id: string | undefined) => useQuery({
-        queryKey: ['getDeckById'],
+        queryKey: ['deckId'],
         queryFn: () => deckService.getDeckById(id? id : 'undefined')
 })
 
 export const useDecksQuery = () => useQuery({
-        queryKey: ['getDecks'],
+        queryKey: ['decks'],
         queryFn: deckService.getAllDeck
 })

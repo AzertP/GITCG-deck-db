@@ -1,16 +1,16 @@
 import { useEffect, useMemo } from "react"
-import { Box, Button, Collapse, Grid2, Pagination, TextField } from "@mui/material"
+import { Box, Button, Card, Collapse, Grid2, Pagination, TextField } from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
 import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
 
-import { CardElement } from "./cardElement"
+import { CardElement, SkeletonCardElement } from "./cardElement"
 import FilterActionBoard from "./filter-boards/filterAction"
 import FilterCharacterBoard from "./filter-boards/filterCharacter"
 import LoadingScreen from "./loading"
 
-import useCharacterStore from "../store/characterStore"
-import useActionStore from "../store/actionStore"
+import useCharacterStore from "../store/filter-store/characterStore"
+import useActionStore from "../store/filter-store/actionStore"
 import useCardPageStore from "../store/cardPageStore"
 import { useActionsQuery, useCharactersQuery } from "../queries/queries"
 
@@ -20,11 +20,6 @@ const CardGrid = ({cardList}: {cardList: CharacterCard[] | ActionCard[] | undefi
     
     return <Grid2 container spacing={2} sx={{marginTop: 2}}>
         {cardList.map(card => {
-            if (isCharacterCard(card))
-                return <Grid2 key={card.id}>
-                    <CardElement {...card}/>
-                </Grid2>
-
             return <Grid2 key={card.id}>
                 <CardElement {...card}/>
             </Grid2>

@@ -1,7 +1,7 @@
 import { allActionTags } from "../../utils/tags";
-import { Box, Button, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material'
 
-import useActionStore from "../../store/actionStore";
+import useActionStore from "../../store/filter-store/actionStore";
 
 import './filter.css'
 
@@ -23,13 +23,6 @@ const FilterActionBoard = () => {
                             sx={{display: 'flex', flexWrap: 'wrap'}}>
             {allActionTags.map((tag) => {
                 return <ToggleButton key={tag} value={tag}
-                // sx={{
-                //     // borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                //     '&:not(:first-of-type)': {
-                //         borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-                //     },
-                //     borderRadius: '0%'
-                // }}
                 className="tag-button">
                     {tag}
                 </ToggleButton>

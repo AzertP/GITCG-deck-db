@@ -1,6 +1,6 @@
-import { Box, Button, List, ListItem, ListItemText, ListSubheader, Menu, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
+import { Box, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material'
 import { allCharacterTags } from '../../utils/tags'
-import useCharacterStore from '../../store/characterStore'
+import useCharacterStore from '../../store/filter-store/characterStore'
 
 const FilterCharacterBoard = () => {
     const selectedTags = useCharacterStore(state => state.selectedTags)

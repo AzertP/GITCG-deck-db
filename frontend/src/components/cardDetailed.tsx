@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router-dom"
 import { Box, Typography,   
     List, ListItem, ListItemText, ListItemIcon, 
@@ -13,6 +12,7 @@ import hpIcon from '../assets/hp-icon.png'
 import SmallDecklist from "./smallDecklist";
 import LoadingScreen from "./loading";
 import NotFoundPage from "./404page";
+import { useCardIdQuery } from "../queries/queries";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -89,10 +89,7 @@ const CharacterDescription = (character: CharacterCard) => {
 const CardDetailed = () => {
     const {id} = useParams()
     
-    const cardStat = useQuery({
-        queryKey: ['singleCard'],
-        queryFn: () => cardService.getCardById(Number(id))
-    })
+    const cardStat = useCardIdQuery(id)
     
     if (cardStat.isError) {
         console.log('error?')

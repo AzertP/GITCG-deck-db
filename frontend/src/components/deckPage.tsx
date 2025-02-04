@@ -1,12 +1,16 @@
 import { Deck } from "../../../types/card-types"
-import useDeckPageStore from "../store/deckPageStore"
 
-import { Link, Route, Routes, useParams } from "react-router-dom"
-import { CardElement } from "./cardElement"
-import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, 
-            Pagination, Snackbar, Typography } from "@mui/material"
 import { useMemo, useState } from "react"
+import { Link, Route, Routes, useParams } from "react-router-dom"
+import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, 
+    Pagination, Snackbar, Typography } from "@mui/material"
+
+
+import { CardElement } from "./cardElement"
 import LoadingScreen from "./loading"
+import NotFoundPage from "./404page"
+
+import useDeckPageStore from "../store/deckPageStore"
 import { useDeckByIdQuery, useDecksQuery } from "../queries/queries"
 
 const DeckElement = (deck: Deck) => {
@@ -52,6 +56,9 @@ const DetailedDeckView = () => {
 
     const [copied, setCopied] = useState(false)
 
+    if (deck.isError) {
+        return <NotFoundPage/>
+    }
     
     const handleCopy = () => {
         if (deck.data === undefined) return
@@ -136,6 +143,7 @@ const DeckPage = () => {
 
     const {currentPage, pageLimit, setCurrentPage} = useDeckPageStore()
 
+    
     if (decks.isLoading || decks.data === undefined) {
         return <LoadingScreen/>
     }
