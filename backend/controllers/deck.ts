@@ -1,49 +1,26 @@
 import express from 'express'
 import { decodeDeck } from 'utils/cards-util'
-import { Deck, DetailedDeck } from '../../types/card-types'
 import { deckSchemaToDeck, deckSchemaToDetailed } from 'utils/deck-utils'
 import { DeckModel } from 'models/deck-model'
 import { DeckSchema } from 'types/deck-type'
 import { Types } from 'mongoose'
+import authenticate from 'utils/authenticate'
 
 interface NewDeckQuery {
     name: string,
     description: string,
-    deckcode: string
+    deckcode: string,
+    password: string
 }
-
-// const deckData2: DeckSchema[] = [
-//     {
-//         id: "0",
-//         name: "Crime and Punishment",
-//         description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent justo mi, efficitur vel aliquam at, faucibus ut urna. Nunc ultrices ante quis turpis accumsan porta. In venenatis enim a quam cursus, eu iaculis risus fringilla. Aenean ultrices at nunc vitae tempus. Cras nec porttitor leo. Mauris laoreet iaculis pellentesque.",
-//         deckcode: "G1AAyRMMAZDQ0U8NBBHwZ1kWCHDh3WMPCUAw9JcPCVBx9lcPFWFwC7QQC7FAEMURDAAA",
-//         characters: [432, 19, 29],
-//         actions: [79,79,89,142,355,147,151,151,343,343,180,180,
-//                     197,197,201,201,209,209,359,359,221,244,244,
-//                     245,246,246,267,267,272,272]
-//     },
-//     {
-//         id: "1",
-//         name: "Hydro Chiori",
-//         description: "Real Chiori deck, play only this one",
-//         deckcode: "FkHixaUNF5HCyqgOGxFy0mIOClLCO0kPGSES44IQHGJyi7gZDKJhC7cRDPLRasIXDZEB",
-//         characters: [350,420,364],
-//         actions: [423,423,353,156,328,385,385,439,439,182,182,
-//                     189,193,196,196,201,201,209,209,213,314,226,
-//                     226,246,394,394,266,271,361,361]
-//     }
-// ]
 
 const deckRouter = express.Router()
 
 const isNewDeckQuery = (data: any): data is NewDeckQuery => {
     return ('deckcode' in data 
         && 'description' in data
-        && 'name' in data)
+        && 'name' in data
+        && 'password' in data)
 }
-
-// const toDeckSchema
 
 deckRouter.get("/", async (_req, res) => {
     const decks = await DeckModel.find({})
@@ -79,6 +56,11 @@ deckRouter.post("/submit", async (req, res) => {
     const data = req.body
     
     if (isNewDeckQuery(data)) {
+        if (authenticate(data.password) === false) {
+            res.status(400).json({error: 'Wrong password'})
+            return
+        }
+
         const deck = await decodeDeck(data.deckcode)
         if (deck === undefined) {
             res.status(400).json({error: "Invalid deck code"})

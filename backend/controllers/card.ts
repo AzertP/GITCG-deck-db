@@ -2,7 +2,7 @@ import express from 'express'
 import { actionCards, characterCards, convertActionCard, convertCharacterCard,
         getCardById, isTcgCharacterCard
  } from 'utils/cards-util'
-import { CardStats, isActionCard } from '../../types/card-types'
+import { CardStats } from '../../types/card-types'
 import { DeckModel } from 'models/deck-model'
 import { deckSchemaToDeck } from 'utils/deck-utils'
 import { DeckSchema } from 'types/deck-type'
@@ -27,10 +27,6 @@ cardRouter.get("/:id", async (req, res) => {
         })
         return
     }
-
-    
-    // console.log(card)
-    // console.log(decks)
 
     if (isTcgCharacterCard(card)) {
         const decks = await DeckModel.find({

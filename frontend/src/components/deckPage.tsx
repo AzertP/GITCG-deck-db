@@ -1,6 +1,6 @@
 import { Deck } from "../../../types/card-types"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Link, Route, Routes, useParams } from "react-router-dom"
 import { Box, Button, Grid2, List, ListItem, ListItemIcon, ListItemText, 
     Pagination, Snackbar, Typography } from "@mui/material"
@@ -55,6 +55,10 @@ const DetailedDeckView = () => {
     const deck = useDeckByIdQuery(id)
 
     const [copied, setCopied] = useState(false)
+
+    useEffect(() => {
+        document.title = deck.data? deck.data.name + ' | GITCG' : 'Loading...'
+    }, [deck.data])
 
     if (deck.isError) {
         return <NotFoundPage/>

@@ -1,10 +1,10 @@
 import { useEffect, useMemo } from "react"
-import { Box, Button, Card, Collapse, Grid2, Pagination, TextField } from "@mui/material"
+import { Box, Button, Collapse, Grid2, Pagination, TextField } from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
-import { ActionCard, CharacterCard, isCharacterCard } from "../../../types/card-types"
+import { ActionCard, CharacterCard } from "../../../types/card-types"
 
-import { CardElement, SkeletonCardElement } from "./cardElement"
+import { CardElement } from "./cardElement"
 import FilterActionBoard from "./filter-boards/filterAction"
 import FilterCharacterBoard from "./filter-boards/filterCharacter"
 import LoadingScreen from "./loading"

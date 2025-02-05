@@ -3,7 +3,6 @@ import { Box, Typography,
     List, ListItem, ListItemText, ListItemIcon, 
     Button} from "@mui/material";
 
-import cardService from "../services/card-service"
 import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../types/card-types"
 
 import TextInIcon from "./text-in-icon";
@@ -13,6 +12,7 @@ import SmallDecklist from "./smallDecklist";
 import LoadingScreen from "./loading";
 import NotFoundPage from "./404page";
 import { useCardIdQuery } from "../queries/queries";
+import { useEffect } from "react";
 
 const ActionDescription = (action: ActionCard) => {
     return <Box>
@@ -91,6 +91,10 @@ const CardDetailed = () => {
     
     const cardStat = useCardIdQuery(id)
     
+    useEffect(() => {
+        document.title = cardStat.data? cardStat.data.card.name + ' | GITCG' : "Loading..."
+    }, [cardStat.data])
+
     if (cardStat.isError) {
         console.log('error?')
         return <NotFoundPage/>
