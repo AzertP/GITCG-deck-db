@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import gdb, { TcgActionCards, TcgCharacterCards } from '@genshin-db/tcg'
-import {ActionCard, CharacterCard, DiceType, isDiceType, Cost, Skill} from '../../types/card-types'
+import {ActionCard, CharacterCard, DiceType, isDiceType, Cost, Skill} from '../../shared/card-types'
 
 export function isTgcActionCard(card: TcgActionCards | TcgCharacterCards): card is TcgActionCards {
     return 'playcost' in card

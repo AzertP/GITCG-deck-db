@@ -2,7 +2,7 @@ import express from 'express'
 import { actionCards, characterCards, convertActionCard, convertCharacterCard,
         getCardById, isTcgCharacterCard
  } from 'utils/cards-util'
-import { CardStats } from '../../types/card-types'
+import { CardStats } from '../../shared/card-types'
 import { DeckModel } from 'models/deck-model'
 import { deckSchemaToDeck } from 'utils/deck-utils'
 import { DeckSchema } from 'types/deck-type'

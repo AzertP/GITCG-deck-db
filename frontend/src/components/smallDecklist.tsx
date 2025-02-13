@@ -1,4 +1,4 @@
-import { Deck } from "../../../types/card-types";
+import { Deck } from "../../../shared/card-types";
 import {Link} from "react-router-dom";
 import { Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography } 
         from "@mui/material";

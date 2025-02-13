@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Deck, DetailedDeck } from "../../../types/card-types";
+import { Deck, DetailedDeck } from "../../../shared/card-types";
 
 const base_URL = 'http://localhost:3001/api/deck'
 

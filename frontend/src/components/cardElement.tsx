@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import { Card, CardActionArea, Skeleton, Tooltip, Typography } from "@mui/material"
 
-import { CharacterCard, ActionCard, isCharacterCard } from "../../../types/card-types"
+import { CharacterCard, ActionCard, isCharacterCard } from "../../../shared/card-types"
 import getDiceIcon from "../utils/get-dice-icon"
 import hpIcon from "../assets/hp-icon.png"
 
@@ -67,7 +67,7 @@ const CharacterCardElement = ({character, handler} : {character: CharacterCard,
     return (
         <div className="card-container">
             <img src={character.img_link} 
-                alt={character.name} className="card-img"
+                alt={character.name} className="card-img" 
                 onLoad={handler}/>
             <div className="top-icon">
                 <TextInIcon icon={hpIcon} text={String(character.hp)}/>
@@ -94,13 +94,4 @@ const ActionCardElement = ({action, handler} : {action: ActionCard,
             </div>
         </div>
     )
-}
-
-export const SkeletonCardElement = (card: CharacterCard | ActionCard) => {
-    // const loaded = useCardElementStore().loaded
-
-    // return (loaded? <Skeleton variant="rectangular" width={175} height={300}/>
-    //               : isCharacterCard(card)? <CharacterCardElement {...card}/>
-    //                                      : <ActionCardElement {...card}/>
-    // )
 }

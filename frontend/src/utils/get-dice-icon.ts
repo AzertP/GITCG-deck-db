@@ -1,4 +1,4 @@
-import { DiceType } from "../../../types/card-types";
+import { DiceType } from "../../../shared/card-types";
 import diceIcons from "../assets/dice-icons/dice-icons";
 
 const getDiceIcon = (diceType: DiceType) => {

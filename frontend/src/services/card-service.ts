@@ -1,5 +1,5 @@
 import axios from "axios";
-import {ActionCard, CardStats, CharacterCard} from '../../../types/card-types'
+import {ActionCard, CardStats, CharacterCard} from '../../../shared/card-types'
 
 const base_URL = 'http://localhost:3001/api/card'
 

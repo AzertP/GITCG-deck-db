@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react"
 import { Box, Button, Collapse, Grid2, Pagination, TextField } from "@mui/material"
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
-import { ActionCard, CharacterCard } from "../../../types/card-types"
+import { ActionCard, CharacterCard } from "../../../shared/card-types"
 
 import { CardElement } from "./cardElement"
 import FilterActionBoard from "./filter-boards/filterAction"

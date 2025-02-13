@@ -3,7 +3,7 @@ import { Box, Typography,
     List, ListItem, ListItemText, ListItemIcon, 
     Button} from "@mui/material";
 
-import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../types/card-types"
+import { ActionCard, CharacterCard, isActionCard, Skill } from "../../../shared/card-types"
 
 import TextInIcon from "./text-in-icon";
 import getDiceIcon from "../utils/get-dice-icon";

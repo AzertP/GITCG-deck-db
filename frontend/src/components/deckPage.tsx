@@ -1,4 +1,4 @@
-import { Deck } from "../../../types/card-types"
+import { Deck } from "../../../shared/card-types"
 
 import { useEffect, useMemo, useState } from "react"
 import { Link, Route, Routes, useParams } from "react-router-dom"

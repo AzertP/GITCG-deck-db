@@ -1,5 +1,15 @@
 {
   "devDependencies": {
-    "@types/node": "^22.10.2"
-  }
+    "@types/node": "^22.10.2",
+    "lerna": "^8.1.9"
+  },
+  "name": "genshin-tcg",
+  "version": "1.0.0",
+  "description": "A site to showcase decklists",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "genshin-tcg",
+  "name": "genshin-tcg-backend",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/mongoose": "^5.11.97"
+    "@types/mongoose": "^5.11.97",
+    "wrangler": "^3.107.3"
   }
 }

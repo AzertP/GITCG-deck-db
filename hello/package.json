@@ -1,0 +1,26 @@
+{
+  "name": "hello",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Huan Vo <huanvhc15@gmail.com>",
+  "homepage": "https://github.com/AzertEM/GITCG-deck-db#readme",
+  "license": "ISC",
+  "main": "lib/hello.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AzertEM/GITCG-deck-db.git"
+  },
+  "scripts": {
+    "test": "node ./__tests__/hello.test.js"
+  },
+  "bugs": {
+    "url": "https://github.com/AzertEM/GITCG-deck-db/issues"
+  }
+}
