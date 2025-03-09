@@ -30,8 +30,8 @@ const getAllActionCards = () => {
 }
 
 function getImageUrl(filename: string) {
-    filename = filename.replace(" ", "_");
-    return `https://gi.yatta.moe/assets/UI/gcg/${filename}.png`;
+    // filename = filename.replace(" ", "_");
+    return `https://cdn.thecatstail.pub/${filename}.png`;
 }
 
 export const convertCharacterCard = (character: TcgCharacterCards) => {

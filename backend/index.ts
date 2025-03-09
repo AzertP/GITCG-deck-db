@@ -12,8 +12,8 @@ app.use(cors())
 app.use(express.json())
 
 app.use(logger)
-app.use("/api/card", cardRouter)
-app.use("/api/deck", deckRouter)
+app.use("/card", cardRouter)
+app.use("/deck", deckRouter)
 
 app.use(errorHandler)
 

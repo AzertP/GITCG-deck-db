@@ -21,10 +21,7 @@ const allActionTags = [
     'Technique',
     'Location',
     'Elemental Resonance',
-    // 'Polearm',
     'Item',
-    // 'Shield',
-    // 'Arkhe: Ousia'
 ]
 
 const elementTags = ['Hydro', 'Pyro', 'Electro', 'Geo', 'Dendro', 'Anemo', 'Cryo']
