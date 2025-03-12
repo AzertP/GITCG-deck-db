@@ -5,7 +5,9 @@ import {
 
 import { AppBar, Button, Container, Toolbar,  
         StyledEngineProvider,
-        CssBaseline, ThemeProvider} from '@mui/material'
+        CssBaseline, ThemeProvider,
+        Box,
+        Typography} from '@mui/material'
 
 import theme from './style/theme'
 
@@ -22,12 +24,23 @@ function App() {
       <StyledEngineProvider injectFirst>
           <CssBaseline/>
           <BrowserRouter basename='/'>
-          <div>
-            <AppBar position='sticky'>
-              <Toolbar>
-                <Button component={Link} to="/" color='inherit'>
-                  Home
-                </Button>
+            <AppBar position='fixed'>
+              <Container maxWidth='xl' sx={{background: 'transparent'}}>
+              <Toolbar disableGutters={false}>
+                <Box padding={1}>
+                <img src='../public/cat.svg' width='40px'/>
+                </Box>
+                <Typography variant='h6' component={Link} to='/' sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}>
+                  CAT'S TAIL
+                  </Typography>
                 <Button component={Link} to="/card" color='inherit'>
                   Card
                 </Button>
@@ -35,8 +48,10 @@ function App() {
                   Deck
                 </Button>
               </Toolbar>
+              </Container>
             </AppBar>
-          </div>
+            <Toolbar/>
+          
           <Container>
             <Routes>
               <Route path='/' element={<p>Welcome home!</p>}/> 
