@@ -28,12 +28,12 @@ function App() {
               <Container maxWidth='xl' sx={{background: 'transparent'}}>
               <Toolbar disableGutters={false}>
                 <Box padding={1}>
-                <img src='../public/cat.svg' width='40px'/>
+                <img src='/cat.svg' width='40px'/>
                 </Box>
                 <Typography variant='h6' component={Link} to='/' sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'sans-serif',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
